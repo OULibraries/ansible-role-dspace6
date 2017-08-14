@@ -1,0 +1,94 @@
+---
+- name: Install dspace dependencies
+  yum:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - java-1.8.0-openjdk
+    - maven
+    - ant
+    - tomcat
+    - tomcat-webapps
+    - tomcat-admin-webapps
+    
+- name: Create folder for oulib/dspace scripts
+  file:
+    path: /opt/oulib/dspace/bin
+    state: directory
+
+- name: Create folder for oulib/dspace config
+  file:
+    path: /opt/oulib/dspace/etc
+    state: directory
+
+- name: Create script configuration file
+  template:
+    src: conf.j2
+    dest: /opt/oulib/dspace/etc/conf.sh
+
+- name: Install scripts
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oulib/dspace/bin/
+  with_items:
+    - ds_build.sh
+    - ds_clean.sh
+    - ds_exportdb.sh
+    - ds_reconfigure.sh
+
+- name: Ensure /etc/profile.d/oulib-dspace.sh exists
+  file:
+    path: /etc/profile.d/oulib-dspace.sh
+    state: touch
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Add oulib/dspace scripts to path
+  lineinfile:
+    dest: /etc/profile.d/oulib-dspace.sh
+    line: 'export PATH=/opt/oulib/dspace/bin:$PATH'
+    
+- name: Add oulib/dspace scripts to sudo secure_path
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin$'
+    line: 'Defaults    secure_path = /opt/oulib/dspace/bin:/sbin:/bin:/usr/sbin:/usr/bin'
+    validate: 'visudo -cf %s'
+
+    
+- name: Save public key to file
+  copy:
+    content: "{{ hostvars.localhost.deploy_public_key }}"
+    dest: "/home/vagrant/.ssh/libdev_rsa.pub"
+    mode: 0600
+    owner: vagrant
+    group: vagrant
+
+- name: Save private key to file
+  copy:
+    content: "{{ hostvars.localhost.deploy_private_key }}"
+    dest: "/home/vagrant/.ssh/libdev_rsa"
+    mode: 0600
+    owner: vagrant
+    group: vagrant
+
+- name: Create .m2 folder for maven repository
+  file:
+    path: "/home/vagrant/.m2"
+    state: directory
+    mode: 0770
+    owner: vagrant
+    group: vagrant
+ 
+- name: Create maven settings file with @mire credentials
+  template:
+    src: m2_settings.xml.j2
+    dest: "/home/vagrant/.m2/settings.xml"
+    mode: 0644
+    owner: vagrant
+    group: vagrant
+
+
+

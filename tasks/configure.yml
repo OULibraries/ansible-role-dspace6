@@ -1,0 +1,10 @@
+---
+
+- name: Enable and start tomcat service
+  service:
+    name: tomcat
+    enabled: yes
+    state: started
+
+
+
