@@ -38,6 +38,7 @@
   unarchive:
     src: /tmp/dspace6-current.tar.gz
     dest: /tmp/dspace6/
+    copy: no
     owner: tomcat
     group: tomcat 
 
