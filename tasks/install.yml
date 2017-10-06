@@ -196,6 +196,23 @@
     dest: /etc/tomcat/Catalina/localhost/rest.xml
     backup: yes
 
+- name: config XMLWorflow
+  template:
+    src: hibernate.cfg.xml.j2
+    dest: /srv/oulib/dspace/config/hibernate.cfg.xml
+    backup: yes
+
+- name: config XMLWorflow
+  template:
+    src: core-services.xml.j2
+    dest: /srv/oulib/dspace/config/spring/api/core-services.xml
+    backup: yes
+
+- name: config XMLWorflow
+  template:
+    src: core-factory-services.xml.j2
+    dest: /srv/oulib/dspace/config/spring/api/core-factory-services.xml
+    backup: yes
 
 
 
