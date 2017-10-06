@@ -141,7 +141,7 @@
   become: True
   become_user: tomcat
   shell: |
-    /opt/apache/maven/bin/mvn package -Dmirage2.on=false
+    /opt/apache/maven/bin/mvn package -Dmirage2.on=true
   args:
     chdir: /tmp/dspace6/dspace-6.1-release/
 
