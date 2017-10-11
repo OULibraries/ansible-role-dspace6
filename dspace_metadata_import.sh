@@ -22,76 +22,57 @@
 #                       												#
 #########################################################################
 
-PATH_TO_REGISTRIES_FROM_OLD_DSPACE = /vagrant/registries.tar.gz
-PATH_TO_OLD_DSPACE_DATABASE_DATA = /vagrant/test3.pgsql
+PATH_TO_REGISTRIES_FROM_OLD_DSPACE=/tmp/registries.tar.gz
+PATH_TO_OLD_DSPACE_DATABASE_DATA=/tmp/test3.pgsql
+EXISTING_DSPACE_DATABASE_NAME=dspace
+EXISTING_DSPACE_DATABASE_NAME_CHANGED=dspace_old
+NEW_DSPACE_DATABASE_NAME=dspace2
+DSPACE_DATABASE_OWNER=dspace
 
+sudo systemctl stop tomcat
 
-echo "#####  Create new database dspace2  #####"
+echo "#####  Create new database with a new name  #####"
 
 sudo -u postgres psql <<EOF
 
-DROP DATABASE IF EXISTS dspace2;
+DROP DATABASE IF EXISTS $NEW_DSPACE_DATABASE_NAME;
 
-CREATE DATABASE dspace2 WITH OWNER dspace; 
+DROP DATABASE IF EXISTS $EXISTING_DSPACE_DATABASE_NAME_CHANGED;
 
-\c dspace2
+CREATE DATABASE $NEW_DSPACE_DATABASE_NAME WITH OWNER $DSPACE_DATABASE_OWNER; 
+
+\c $NEW_DSPACE_DATABASE_NAME
 
 CREATE EXTENSION pgcrypto;
 
 EOF
 
-echo "#####  Import metadata into database dspace2  #####"
+echo "#####  Import metadata into the new database  #####"
 
-sudo -u postgres psql -U dspace -h localhost dspace2 < $PATH_TO_OLD_DSPACE_DATABASE_DATA
+sudo -u postgres psql -U $DSPACE_DATABASE_OWNER -h localhost $NEW_DSPACE_DATABASE_NAME < $PATH_TO_OLD_DSPACE_DATABASE_DATA
 
-sudo -u postgres psql <<EOF
-
-\c dspace2
-
-ALTER DATABASE dspace RENAME TO dspace_old;
-
-REVOKE CONNECT ON DATABASE dspace2 FROM public;
-
-SELECT pg_terminate_backend(pg_stat_activity.pid)
-FROM pg_stat_activity
-WHERE pg_stat_activity.datname = 'dspace2';
-
-ALTER DATABASE dspace2 RENAME TO dspace;
-
-EOF
-
-echo "#####  Show database info  #####"
-
-sudo /srv/oulib/dspace/bin/dspace database info
-
-echo "#####  Running database upgrade script  #####"
-
-sudo /srv/oulib/dspace/bin/dspace database migrate
-
-echo "#####  Modified imported metadata in dspace2  #####"
+echo "##### Modify the databases #####"
 
 sudo -u postgres psql <<EOF
 
-\c dspace2
+ALTER DATABASE $EXISTING_DSPACE_DATABASE_NAME RENAME TO $EXISTING_DSPACE_DATABASE_NAME_CHANGED;
 
-ALTER DATABASE dspace RENAME TO dspace_old;
+\c $EXISTING_DSPACE_DATABASE_NAME_CHANGED
 
-CREATE RULE protect_approval_upd AS
-    ON UPDATE TO workflowitem
-   WHERE ((new.state = ANY (ARRAY[2, 4, 6])) AND (new.owner IN ( SELECT item.submitter_id
-           FROM item
-          WHERE (item.item_id = new.item_id)))) DO INSTEAD NOTHING;
+ALTER DATABASE $NEW_DSPACE_DATABASE_NAME RENAME TO $EXISTING_DSPACE_DATABASE_NAME;
+
+\q
 
 EOF
 
 echo "#####  Copy over the registry files  #####"
 sudo mv /srv/oulib/dspace/config/registries/ /srv/oulib/dspace/config/registries-old/
-sudo tar -xvf $PATH_TO_REGISTRIES_FROM_OLD_DSPACE
-sudo mv /vagrant/registries /srv/oulib/dspace/config
+sudo tar -xvf $PATH_TO_REGISTRIES_FROM_OLD_DSPACE -C /tmp
+sudo mv /tmp/registries /srv/oulib/dspace/config
 sudo chown -R tomcat:tomcat /srv/oulib/dspace/config/registries/
 
 echo "#####  Restart Tomcat service  #####"
-sudo systemctl restart tomcat
+sudo systemctl start tomcat
 
 echo "#####  Finished Database section  #####"
 exit
