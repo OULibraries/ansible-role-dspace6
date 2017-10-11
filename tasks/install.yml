@@ -18,14 +18,14 @@
     line: 'JAVA_OPTS="{{ dspace6_default_java_opt_setting }}"'
     backup: yes
     owner: tomcat
-    group: root
+    group: wheel
 
 - name: Create Apache Project installation directory
   file:
     path: /opt/apache/
     state: directory
     owner: root
-    group: root
+    group: wheel
     mode: 0755
 
 - name: Download Apache maven
@@ -33,7 +33,7 @@
     url: "http://mirror.cc.columbia.edu/pub/software/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz"
     dest: "/tmp/apache-maven-3.5.0-bin.tar.gz"
     owner: tomcat
-    group: root
+    group: wheel
     mode: 0644
 
 - name: Install Apache maven
