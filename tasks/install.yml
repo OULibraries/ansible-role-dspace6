@@ -10,6 +10,16 @@
     - tomcat-webapps
     - tomcat-admin-webapps
 
+- name: add JAVA_OPTS to tomcat.conf
+  lineinfile:
+    state: present
+    path: /etc/tomcat/tomcat.conf
+    regexp: '#JAVA_OPTS="-Xminf0.1 -Xmaxf0.3"'
+    line: 'JAVA_OPTS="{{ dspace6_default_java_opt_setting }}"'
+    backup: yes
+    owner: tomcat
+    group: root
+
 - name: Create Apache Project installation directory
   file:
     path: /opt/apache/
@@ -53,13 +63,13 @@
     dest: /etc/profile.d/java-tools.sh
     line: "export PATH=/opt/apache/maven/bin/mvn:$PATH"
 
-- name: Replace default tomact config file
-  template:
-    src: tomcat.conf.j2
-    dest: /usr/share/tomcat/conf/tomcat.conf
-    backup: yes
-    owner: tomcat
-    group: root
+# - name: Replace default tomact config file
+#   template:
+#     src: tomcat.conf.j2
+#     dest: /usr/share/tomcat/conf/tomcat.conf
+#     backup: yes
+#     owner: tomcat
+#     group: root
 
 - name: Install psycopg2 python module
   pip:
@@ -154,11 +164,11 @@
     chdir: /tmp/dspace6/dspace-6.1-release/dspace/target/dspace-installer
 
 - name: Set default SELinux context for dspace webapps
-  command: semanage fcontext -a -t tomcat_var_lib_t '/srv/oulib/dspace/webapps(/.*)?'
+  command: semanage fcontext -a -t tomcat_var_lib_t '/srv/oulib/dspace(/.*)?'
 
 
 - name: Apply default SELinux context to dspace webapps
-  command: restorecon -R -v /srv/oulib/dspace/webapps
+  command: restorecon -R -v /srv/oulib/dspace
 
 - name: Create xmlui.xml file
   template:
