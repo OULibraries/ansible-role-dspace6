@@ -101,9 +101,17 @@ ALTER DATABASE $NEW_DSPACE_DATABASE_NAME RENAME TO $EXISTING_DSPACE_DATABASE_NAM
 
 EOF
 
+echo "#####  Show database info  #####"
+
+sudo /srv/oulib/dspace/bin/dspace database info
+
+echo "#####  Running database upgrade script  #####"
+
+sudo /srv/oulib/dspace/bin/dspace database migrate
+
 echo "#####  Copy over the registry files  #####"
 sudo mv /srv/oulib/dspace/config/registries/ /srv/oulib/dspace/config/registries-old/
-sudo mkdir /tmp/registries && tar -xvf $PATH_TO_REGISTRIES_FROM_OLD_DSPACE -C /tmp/registries --strip-components=2
+sudo mkdir /tmp/registries && sudo tar -xvf $PATH_TO_REGISTRIES_FROM_OLD_DSPACE -C /tmp/registries --strip-components=2
 sudo mv /tmp/registries /srv/oulib/dspace/config
 sudo chown -R tomcat:tomcat /srv/oulib/dspace/config/registries/
 
