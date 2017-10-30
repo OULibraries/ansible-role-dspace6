@@ -26,18 +26,25 @@
 EXISTING_DSPACE_DATABASE_NAME_CHANGED=dspace_changed_from_existing_temp
 NEW_DSPACE_DATABASE_NAME=dspace_new_temp
 
-while getopts o:p:q:r:s:t: option
-  do
-    case "${option}"
-    in
-      o) PATH_TO_REGISTRIES_FROM_OLD_DSPACE=${OPTARG};;
-      p) PATH_TO_OLD_DSPACE_DATABASE_DATA=${OPTARG};;
-      q) EXISTING_DSPACE_DATABASE_NAME=${OPTARG};;
-      r) DSPACE_DATABASE_OWNER=${OPTARG};;
-      s) DATABASE_HOSTNAME=$OPTARG;;
+# while getopts old_registries_file_path:old_dspace_data_file_path:existing_dspace_database_name:dspace_owner_name:database_homename: option
+#   do
+#     case "${option}"
+#     in
+#       old_registries_file_path)       PATH_TO_REGISTRIES_FROM_OLD_DSPACE=${OPTARG};;
+#       old_dspace_data_file_path)      PATH_TO_OLD_DSPACE_DATABASE_DATA=${OPTARG};;
+#       existing_dspace_database_name)  EXISTING_DSPACE_DATABASE_NAME=${OPTARG};;
+#       dspace_owner_name)              DSPACE_DATABASE_OWNER=${OPTARG};;
+#       database_homename)              DATABASE_HOSTNAME=$OPTARG;;
     
- esac
-done
+#  esac
+# done
+
+PATH_TO_REGISTRIES_FROM_OLD_DSPACE=$1
+PATH_TO_OLD_DSPACE_DATABASE_DATA=$2
+EXISTING_DSPACE_DATABASE_NAME=$3
+DSPACE_DATABASE_OWNER=$4
+DATABASE_HOSTNAME=$5
+
 
 if [[ -z "${PATH_TO_REGISTRIES_FROM_OLD_DSPACE// }" ]]; then
 	echo "ERROR: the path to the registries of the old dspace instance is not defined!"
