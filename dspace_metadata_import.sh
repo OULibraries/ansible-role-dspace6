@@ -76,7 +76,7 @@ sudo systemctl stop tomcat
 
 echo "#####  Create new database with a new name  #####"
 
-sudo -u postgres psql <<EOF
+cat <<EOF | psql -U $DSPACE_DATABASE_OWNER -h $DATABASE_HOSTNAME -d postgres
 
 DROP DATABASE IF EXISTS $NEW_DSPACE_DATABASE_NAME;
 
@@ -92,11 +92,11 @@ EOF
 
 echo "#####  Import metadata into the new database  #####"
 
-sudo -u postgres psql -U $DSPACE_DATABASE_OWNER -h $DATABASE_HOSTNAME $NEW_DSPACE_DATABASE_NAME < $PATH_TO_OLD_DSPACE_DATABASE_DATA
+psql -U $DSPACE_DATABASE_OWNER -h $DATABASE_HOSTNAME $NEW_DSPACE_DATABASE_NAME < $PATH_TO_OLD_DSPACE_DATABASE_DATA
 
 echo "##### Modify the databases #####"
 
-sudo -u postgres psql <<EOF
+cat <<EOF | psql -U $DSPACE_DATABASE_OWNER -h $DATABASE_HOSTNAME -d postgres
 
 ALTER DATABASE $EXISTING_DSPACE_DATABASE_NAME RENAME TO $EXISTING_DSPACE_DATABASE_NAME_CHANGED;
 
