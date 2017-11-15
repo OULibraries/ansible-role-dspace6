@@ -30,8 +30,8 @@
 
 - name: Download Apache maven
   get_url:
-    url: "http://mirror.cc.columbia.edu/pub/software/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz"
-    dest: "/tmp/apache-maven-3.5.0-bin.tar.gz"
+    url: "http://mirrors.advancedhosters.com/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
+    dest: "/tmp/apache-maven-3.5.2-bin.tar.gz"
     owner: tomcat
     group: wheel
     mode: 0644
@@ -39,14 +39,14 @@
 - name: Install Apache maven
   unarchive:
     copy: no
-    src: "/tmp/apache-maven-3.5.0-bin.tar.gz"
+    src: "/tmp/apache-maven-3.5.2-bin.tar.gz"
     dest: "/opt/apache"
 
 - name: Build standard links for Apache maven
   file:
     state: link
     force: true
-    src: "/opt/apache/apache-maven-3.5.0"
+    src: "/opt/apache/apache-maven-3.5.2"
     dest: "/opt/apache/maven"
 
 - name: Ensure /etc/profile.d/java-tools.sh exists
@@ -91,7 +91,7 @@
 
 - name: Download dSpace6 Binary
   get_url:
-    url: https://github.com/DSpace/DSpace/releases/download/dspace-6.1/dspace-6.1-release.tar.gz
+    url: https://github.com/DSpace/DSpace/releases/download/dspace-6.2/dspace-6.2-release.tar.gz
     dest: /tmp/dspace6-current.tar.gz
 
 - name: Unarchive dSpace6 Binary
@@ -138,13 +138,13 @@
 - name: Create script configuration file
   template:
     src: conf.j2
-    dest: /tmp/dspace6/dspace-6.1-release/dspace/config/local.cfg
+    dest: /tmp/dspace6/dspace-6.2-release/dspace/config/local.cfg
     backup: yes
 
 - name: Create xmlui configuration file
   template:
     src: xmlui.xconf.j2
-    dest: /tmp/dspace6/dspace-6.1-release/dspace/config/xmlui.xconf
+    dest: /tmp/dspace6/dspace-6.2-release/dspace/config/xmlui.xconf
     backup: yes
 
 - name: Build the dSpace6 installation package
@@ -153,7 +153,7 @@
   shell: |
     /opt/apache/maven/bin/mvn package -Dmirage2.on=true
   args:
-    chdir: /tmp/dspace6/dspace-6.1-release/
+    chdir: /tmp/dspace6/dspace-6.2-release/
 
 - name: Install dSpace6
   become: True
@@ -161,7 +161,7 @@
   shell: |
     ant fresh_install
   args:
-    chdir: /tmp/dspace6/dspace-6.1-release/dspace/target/dspace-installer
+    chdir: /tmp/dspace6/dspace-6.2-release/dspace/target/dspace-installer
 
 - name: Set default SELinux context for dspace webapps
   command: semanage fcontext -a -t tomcat_var_lib_t '/srv/oulib/dspace(/.*)?'
@@ -294,6 +294,4 @@
 #    mode: 0644
 #    owner: vagrant
 #    group: vagrant
-
-
 
