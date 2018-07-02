@@ -17,13 +17,14 @@ Role Variables
 
 Place the following in your host vars or my-vars.yml file:
 
+```
 dspace_install_dir:
 dspace_dn_prefix:
 dspace_dn_suffix:
 dspace_site_name: 
 dspace_db_username:
 dspace_db_password:
-
+```
 
 Example Playbook
 ----------------
@@ -33,7 +34,6 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: servers
       roles:
          - { role: username.rolename, x: 42 }
-
 License
 -------
 
