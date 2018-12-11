@@ -1,0 +1,20 @@
+---
+
+
+- name: Place the deploy key
+  copy:
+    owner: tomcat
+    group: tomcat
+    mode: 0700
+    content: "{{dspace_src_deploykey }}"
+    dest: "{{ dspace_install_dir}}/etc/deploy-key"
+
+- name: Clone DSpace code
+  git: 
+    repo: "{{ dspace_src_repo }}"
+    version: "{{ dspace_src_version }}"
+    key_file: "{{ dspace_install_dir }}/security/deploy-key"
+    accept_hostkey: true
+    dest: "{{dspace_install_dir }}/dspace-src"
+    update: yes
+

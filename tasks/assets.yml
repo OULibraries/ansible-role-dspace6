@@ -1,0 +1,43 @@
+--- 
+
+- name: Create folder for oulib/dspace scripts
+  file:
+    path: /opt/oulib/dspace/bin
+    state: directory
+
+- name: Create folder for oulib/dspace config
+  file:
+    path: /opt/oulib/dspace/etc
+    state: directory
+
+- name: Install scripts
+  copy:
+    src: "{{ item }}"
+    dest: /opt/oulib/dspace/bin/
+  with_items:
+    - ds_build.sh
+    - ds_clean.sh
+    - ds_exportdb.sh
+    - ds_reconfigure.sh
+
+- name: Ensure /etc/profile.d/oulib-dspace.sh exists
+  file:
+    path: /etc/profile.d/oulib-dspace.sh
+    state: touch
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Add oulib/dspace scripts to path
+  lineinfile:
+    dest: /etc/profile.d/oulib-dspace.sh
+    line: 'export PATH=/opt/oulib/dspace/bin:$PATH'
+    
+- name: Add oulib/dspace scripts to sudo secure_path
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin$'
+    line: 'Defaults    secure_path = /opt/oulib/dspace/bin:/sbin:/bin:/usr/sbin:/usr/bin'
+    validate: 'visudo -cf %s'
+

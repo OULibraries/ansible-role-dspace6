@@ -1,0 +1,36 @@
+---
+
+- name: Make DSpace install destination folders
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+  loop:
+    - "{{ dspace_install_dir }}" 
+    - "{{ dspace_install_dir }}/dspace"        
+    - "{{ dspace_install_dir }}/dspace-src"
+    - "{{ dspace_install_dir }}/etc"     
+    - "{{ dspace_install_dir }}/bin"     
+
+
+- name: Install JMX user file
+  template:
+    src: jmxremote.access.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
+        
+- name: Install JMX password file
+  template:
+    src: jmxremote.access.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
+
+# Do we also need a JMX Keystore?
+
+- name: Install build config
+  src: conf.sh.j2
+  dest: "{{ dspace_install_dir }}/etc/conf.sh"
+
+- name: Install build script
+  src: build.sh
+  dest: "{{ dspace_install_dir }}/bin/build.sh"

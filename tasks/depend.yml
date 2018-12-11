@@ -1,0 +1,9 @@
+---
+# Install DSpace Depenencies 
+
+- name: Install Tomcat
+  yum:
+    name: 
+      - tomcat
+      - tomcat-webapps
+      - tomcat-admin-webapps

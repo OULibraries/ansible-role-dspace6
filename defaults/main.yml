@@ -1,3 +1,8 @@
 ---
 # defaults file for oulibraries.dspace6
 dspace6_default_java_opt_setting: '-Xmx512m -XX:MaxPermSize=256m'
+
+dspace_install_dir: /srv/dspace
+dspace_src_repo: ""
+dspace_src_version: ""
+dspace_src_deploykey: ""

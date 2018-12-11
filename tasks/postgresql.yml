@@ -1,0 +1,30 @@
+---
+
+
+
+
+
+
+
+- name: Create postgresql DB user
+  become: True
+  become_user: postgres
+  postgresql_user:
+    name: dspace
+    password: dspace
+    role_attr_flags: NOSUPERUSER
+
+- name: Create postgresql database
+  become: True
+  become_user: postgres
+  postgresql_db:
+    name: dspace
+    owner: dspace
+    encoding: UNICODE
+
+- name: Enable pgcrypto DB Extension
+  become: True
+  become_user: postgres
+  postgresql_ext:
+    name: pgcrypto
+db: dspace
