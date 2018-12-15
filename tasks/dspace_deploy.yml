@@ -13,8 +13,12 @@
   git: 
     repo: "{{ dspace_src_repo }}"
     version: "{{ dspace_src_version }}"
-    key_file: "{{ dspace_install_dir }}/security/deploy-key"
+    key_file: "{{ dspace_install_dir }}/etc/deploy-key"
     accept_hostkey: true
     dest: "{{dspace_install_dir }}/dspace-src"
     update: yes
 
+- name: Install local environment overrides 
+  template:
+    src: local.cfg.j2
+    dest: "{{ dspace_install_dir }}/dspace-src/dspace/config/local.cfg"

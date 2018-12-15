@@ -1,0 +1,4 @@
+---
+
+- name: Build dspace
+  shell: "{{dspace_install_dir}}/bin/build.sh"

@@ -1,0 +1,29 @@
+---
+# Install DSpace Depenencies 
+
+- name: Install required OS pacakges (ant, tomcat, etc) 
+  yum:
+    name: 
+      - tomcat
+      - tomcat-webapps
+      - tomcat-admin-webapps
+
+- name: Create xmlui.xml file
+  template:
+    src: "{{ item.src }}" 
+    dest: "/etc/tomcat/Catalina/localhost/{{ item.dest }}" 
+  loop:
+    - src: ROOT.xml.j2
+      dest: ROOT.xml
+    - src: xmlui.xml.j2
+      dest: xmlui.xml
+    - src: solr.xml.j2
+      dest: solr.xml
+    - src: oai.xml.j2
+      dest: oai.xml
+    - src: rdf.xml.j2
+      dest: rdf.xml
+    - src: sword.xml.j2
+      dest: sword.xml
+    - src: rest.xml.j2
+      dest: rest.xml

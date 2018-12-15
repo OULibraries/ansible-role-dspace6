@@ -1,25 +1,22 @@
 ---
-
-
-
-
-
-
+- name: Install psycopg2 python module
+  pip:
+    name: psycopg2
 
 - name: Create postgresql DB user
   become: True
   become_user: postgres
   postgresql_user:
-    name: dspace
-    password: dspace
+    name: "{{ dspace_db_user }}"
+    password: "{{ dspace_db_pass }}"
     role_attr_flags: NOSUPERUSER
 
 - name: Create postgresql database
   become: True
   become_user: postgres
   postgresql_db:
-    name: dspace
-    owner: dspace
+    name: "{{dspace_db_name }}"
+    owner: "{{ dspace_db_user }}"
     encoding: UNICODE
 
 - name: Enable pgcrypto DB Extension
@@ -27,4 +24,4 @@
   become_user: postgres
   postgresql_ext:
     name: pgcrypto
-db: dspace
+    db: "{{ dspace_db_name }}"

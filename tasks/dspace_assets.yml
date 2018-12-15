@@ -28,9 +28,14 @@
 # Do we also need a JMX Keystore?
 
 - name: Install build config
-  src: conf.sh.j2
-  dest: "{{ dspace_install_dir }}/etc/conf.sh"
+  template:
+    src: conf.sh.j2
+    dest: "{{ dspace_install_dir }}/etc/conf.sh"
 
 - name: Install build script
-  src: build.sh
-  dest: "{{ dspace_install_dir }}/bin/build.sh"
+  template:
+    mode: 0755
+    src: build.sh.j2
+    dest: "{{ dspace_install_dir }}/bin/build.sh"
+
+

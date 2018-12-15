@@ -1,8 +1,32 @@
 ---
-# defaults file for oulibraries.dspace6
+# defaults file for oulibraries.ce6
 dspace6_default_java_opt_setting: '-Xmx512m -XX:MaxPermSize=256m'
 
 dspace_install_dir: /srv/dspace
+
 dspace_src_repo: ""
 dspace_src_version: ""
 dspace_src_deploykey: ""
+
+
+dspace_config_extra: ""
+
+dspace_db_name: dspace
+dspace_db_user: dspace
+dspace_db_pass: dspace
+
+
+dspace_local_cfg: |
+  # Cor overrides
+  dspace.dir = {{dspace_install_dir}}/dspace
+  dspace.hostname =  localhost
+  dspace.baseUrl = http://localhost:8080
+  dspace.name = DSpace Dev
+  assetstore.dir = ${dspace.dir}/assetstore
+  
+  # DB config
+  db.url= jdbc:postgresql://localhost:5432/dspace
+  db.username= {{dspace_db_user }}
+  db.password= {{dspace_db_pass }}
+   
+  # Auth config
