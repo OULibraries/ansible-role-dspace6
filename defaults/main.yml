@@ -1,6 +1,10 @@
 ---
 # defaults file for oulibraries.ce6
-dspace6_default_java_opt_setting: '-Xmx512m -XX:MaxPermSize=256m'
+dspace_tomcat_java_opts: ''
+dspace_cli_java_opts: '' 
+
+dspace_cron_mailto: ""
+dspace_cron_java_opts: "-Xmx4096M -Xms1024M -Dfile.encoding=UTF-8"
 
 dspace_install_dir: /srv/dspace
 

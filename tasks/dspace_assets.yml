@@ -38,4 +38,10 @@
     src: build.sh.j2
     dest: "{{ dspace_install_dir }}/bin/build.sh"
 
-
+- name: Install tomcat crontab for dspace 
+  template:
+    dest: /var/spool/cron/tomcat
+    src: tomcat-cron.j2
+    mode: 0600
+    owner: tomcat
+    group: tomcat
