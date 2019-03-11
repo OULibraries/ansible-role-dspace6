@@ -1,0 +1,27 @@
+#!/bin/bash 
+
+# File managed by Ansible, do not hand edit.
+
+# Load per-host configuration
+. {{dspace_install_dir}}/etc/conf.sh
+
+# Build DSpace as an unprivileged user
+if [[ $EUID -eq 0 ]]; then
+    echo "Please don't run as root."
+    exit
+fi
+
+#
+# Clean  DSpace
+#
+echo "Running Maven clean on ${DSPACE_SRC}"
+cd "${DSPACE_SRC}"
+sudo -u tomcat "${MAVEN}" -Dskiptests clean
+OUT=$?
+
+if [ $OUT -eq 0 ];then
+   echo "Maven clean successful"
+   echo $OUT
+else
+   exit $OUT
+fi

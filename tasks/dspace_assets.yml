@@ -32,11 +32,18 @@
     src: conf.sh.j2
     dest: "{{ dspace_install_dir }}/etc/conf.sh"
 
-- name: Install build script
+- name: Install build scripts
   template:
     mode: 0755
-    src: build.sh.j2
-    dest: "{{ dspace_install_dir }}/bin/build.sh"
+    src: "{{item.src}}" 
+    dest: "{{ dspace_install_dir }}/bin/{{item.dest}}"
+  loop:
+    - src: build.sh.j2
+      dest: build.sh
+    - src: do_build.sh.j2
+      dest: do_build.sh
+    - src: clean.sh.j2
+      dest: clean.sh
 
 - name: Install tomcat crontab for dspace 
   template:

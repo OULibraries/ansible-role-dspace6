@@ -26,4 +26,3 @@
 - import_tasks: dspace_build.yml
   tags: dspace_build
   become: true
-  become_user: tomcat

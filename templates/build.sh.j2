@@ -1,15 +1,9 @@
+#!/bin/bash
+
 # File managed by Ansible, do not hand edit.
 
 # Load per-host configuration
 . {{dspace_install_dir}}/etc/conf.sh
-
-MAVEN_PACKAGE_ARGS="-Dmirage2.on=true"
-
-# Build DSpace as an unprivileged user
-if [[ $EUID -eq 0 ]]; then
-    echo "Please don't run as root."
-    exit
-fi
 
 # Maybe skip restart?
 SKIP_RESTART=0
@@ -17,42 +11,18 @@ if [ "$1" == "--skip-restart" ] ; then
     SKIP_RESTART=1
 fi
 
-#
-# Build DSpace
-#
-cd "${DSPACE_SRC}"
-"${MAVEN}" package "${MAVEN_PACKAGE_ARGS}"
-OUT=$?
-if [ $OUT -eq 0 ];then
-   echo "Maven Update successful"
-else
-   exit $OUT
-fi
 
-#
-# Install DSpace
-#
-cd "${DSPACE_SRC}/dspace/target/dspace-installer"
-if [ -d "${DSPACE_RUN}" ];then
-  $ANT  -Doverwrite=true update clean_backups
-else
-  $ANT fresh_install
-fi
-OUT=$?
-if [ $OUT -eq 0 ];then
-   echo "ANT Update successful"
-else
-   exit $OUT
-fi
+# make sure tomcat can open files that it may overwrite
+sudo chown -R tomcat:tomcat "${DSPACE_RUN}" 
 
-# Make sure tomcat can open files that it needs to use
-# Need to chown if we aren't building as tomcat.
-if [ $(whoami) -ne "tomcat"] ; then
-  sudo chown -R tomcat:tomcat "${DSPACE_RUN}"
-fi
+sudo -u tomcat  {{dspace_install_dir}}/bin/do_build.sh
+
+# make sure SELinux context is right
+
 
 if [ $SKIP_RESTART -eq 1 ];then
   echo "Skipping restart of tomcat"
 else
+  echo "Restarting tomcat"
   sudo systemctl restart tomcat
 fi
