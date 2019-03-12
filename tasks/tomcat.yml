@@ -1,14 +1,14 @@
 ---
 # Install Tomcat and configure for DSpace 
 
-- name: Install required OS pacakges (ant, tomcat, etc) 
+- name: Install Tomcat RPMs 
   yum:
     name: 
       - tomcat
       - tomcat-webapps
       - tomcat-admin-webapps
 
-- name: Configure tomcat for DSpace web apps. 
+- name: Configure Tomcat for DSpace web apps. 
   template:
     src: "{{ item.src }}" 
     dest: "/etc/tomcat/Catalina/localhost/{{ item.dest }}" 
@@ -28,7 +28,7 @@
     - src: rest.xml.j2
       dest: rest.xml
 
-- name: Configure tomcat .bowerrc for building Mirage2 
+- name: Configure tomcat user .bowerrc for building Mirage2 
   copy:
     owner: tomcat
     group: tomcat
