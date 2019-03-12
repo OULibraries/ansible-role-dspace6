@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# File managed by Ansible, do not hand edit.
+
+# Load per-host configuration
+. {{dspace_install_dir}}/etc/conf.sh
+
+
+
+# Verify that tomcat owns DSpace install
+sudo chown -R tomcat:tomcat  {{dspace_install_dir}} 
+
+# Verify SELinux context for dspace install
+restorecon -rv  {{dspace_install_dir}}
+
+# Verify SELinix context for tomcat performance data
+restorecon -rv /tmp/hsperfdata_tomcat

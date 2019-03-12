@@ -1,26 +1,26 @@
 ---
 
-# Install and configure Tomcat to run Dspace 
+# Install and configure Tomcat to run Dspace
 - import_tasks: tomcat.yml
   tags: dspace_tomcat
   become: true
 
 
-# Install DSpace-related role assets          
+# Install DSpace-related role assets
 - import_tasks: assets.yml
   tags: dspace_assets
   become: true
 
-# Create Dspace database           
+# Create Dspace database
 - import_tasks: dspace_database.yml
   tags: dspace_database
   become: true
 
-# Update dspace code and config 
+# Update dspace code and config
 - import_tasks: dspace_src.yml
   tags: dspace_deploy
   become: true
-  become_user: tomcat 
+  become_user: tomcat
 
 # Run DSpace build script to install
 - import_tasks: dspace_build.yml

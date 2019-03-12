@@ -8,7 +8,7 @@
       - tomcat-webapps
       - tomcat-admin-webapps
 
-- name: Create xmlui.xml file
+- name: Configure tomcat for DSpace web apps. 
   template:
     src: "{{ item.src }}" 
     dest: "/etc/tomcat/Catalina/localhost/{{ item.dest }}" 
@@ -28,7 +28,7 @@
     - src: rest.xml.j2
       dest: rest.xml
 
-- name: Configure bower repository for building Mirage2
+- name: Configure tomcat .bowerrc for building Mirage2 
   copy:
     owner: tomcat
     group: tomcat
