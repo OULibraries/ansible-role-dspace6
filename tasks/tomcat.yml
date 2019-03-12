@@ -1,5 +1,5 @@
 ---
-# Install DSpace Depenencies 
+# Install Tomcat and configure for DSpace 
 
 - name: Install required OS pacakges (ant, tomcat, etc) 
   yum:
