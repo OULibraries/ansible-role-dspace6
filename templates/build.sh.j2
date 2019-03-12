@@ -15,10 +15,41 @@ fi
 # make sure tomcat can open files that it may overwrite
 sudo chown -R tomcat:tomcat "${DSPACE_RUN}" 
 
-sudo -u tomcat  {{dspace_install_dir}}/bin/do_build.sh
+MAVEN_PACKAGE_ARGS="-Dmirage2.on=true"
+
+
+#
+# Build DSpace
+#
+cd "${DSPACE_SRC}"
+sudo -u tomcat "${MAVEN}" package "${MAVEN_PACKAGE_ARGS}"
+OUT=$?
+if [ $OUT -eq 0 ];then
+   echo "Maven update successful."
+else
+   echo "Maven update failed."
+   exit $OUT
+fi
+
+#
+# Install DSpace
+#
+cd "${DSPACE_SRC}/dspace/target/dspace-installer"
+if [ -d "${DSPACE_RUN}" ];then
+  sudo -u tomcat  $ANT  -Doverwrite=true update clean_backups
+else
+  sudo -u tomcat  $ANT fresh_install
+fi
+OUT=$?
+if [ $OUT -eq 0 ];then
+   echo "ANT install successful."
+else
+   echo "ANT install failed."
+   exit $OUT
+fi
 
 # make sure SELinux context is right
-
+restorecon -rv {{dspace_install_dir}}
 
 if [ $SKIP_RESTART -eq 1 ];then
   echo "Skipping restart of tomcat"

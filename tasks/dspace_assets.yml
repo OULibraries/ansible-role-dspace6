@@ -14,6 +14,14 @@
     - "{{ dspace_install_dir }}/etc"     
     - "{{ dspace_install_dir }}/bin"     
 
+- name: Set SELinux context for dspace files
+  command: >
+          semanage fcontext -a -t tomcat_var_lib_t  "{{ dspace_install_dir }}(/.*)?"
+
+- name: Set SELinux booleans
+  seboolean:
+    name: tomcat_can_network_connect_db
+    state: yes
 
 - name: Install JMX user file
   template:

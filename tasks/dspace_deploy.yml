@@ -16,9 +16,10 @@
     key_file: "{{ dspace_install_dir }}/etc/deploy-key"
     accept_hostkey: true
     dest: "{{dspace_install_dir }}/dspace-src"
-    update: yes
+    update: True 
 
 - name: Install local environment overrides 
   template:
     src: local.cfg.j2
     dest: "{{ dspace_install_dir }}/dspace-src/dspace/config/local.cfg"
+
