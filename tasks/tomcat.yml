@@ -27,3 +27,13 @@
       dest: sword.xml
     - src: rest.xml.j2
       dest: rest.xml
+
+- name: Configure bower repository for building Mirage2
+  copy:
+    owner: tomcat
+    group: tomcat
+    dest: "/usr/share/tomcat/.bowerrc"
+    content: |
+      {
+        "registry": "https://registry.bower.io"
+      }
