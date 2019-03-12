@@ -48,8 +48,6 @@
   loop:
     - src: build.sh.j2
       dest: build.sh
-    - src: do_build.sh.j2
-      dest: do_build.sh
     - src: clean.sh.j2
       dest: clean.sh
 
