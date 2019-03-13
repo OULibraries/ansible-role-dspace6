@@ -14,7 +14,10 @@ check_steal="/opt/oulib/centos7/bin/cpu_check_steal.sh 10"
 # Run the DSpace media filter scripts and save all output to a log file
 # (Creates image thumbnails, indexes full text, and
 # performs any automated format conversions)
-#0 * * * *  $check_steal $DSPACE/bin/dspace filter-media -m 5
+0 * * * *  $check_steal $DSPACE/bin/dspace filter-media -m 5
+
+# SiteMaps ensure that your content is more findable in Google, Google Scholar, and other major search engines.
+0 4 * * 0 $check_steal $DSPACE/bin/dspace generate-sitemaps > /dev/null
 
 # Optimize discovery index
 30 5 * * 0 $check_steal $DSPACE/bin/dspace index-discovery -o
