@@ -8,7 +8,6 @@
       - tomcat-webapps
       - tomcat-admin-webapps
 
-
 - name: Update tomcat server config
   template:
     src:  "tomcat-server.xml.j2"
