@@ -11,9 +11,13 @@
 
 - name: Update tomcat server config
   template:
-    src:  "tomcat_server.xml.j2"
+    src:  "tomcat-server.xml.j2"
     dest: "/etc/tomcat/server.xml"
 
+- name: Update tomcat logging config
+  template:
+    src:  "tomcat-logging.properties.j2"
+    dest: "/etc/tomcat/logging.properties"
 
 - name: Configure Tomcat for DSpace web apps.
   template:
