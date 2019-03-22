@@ -1,0 +1,11 @@
+---
+- name: Clone DSpace handle config 
+  git:
+    repo: "{{ dspace_handle_repo }}"
+    version: "{{ dspace_handle_version }}"
+    key_file: "{{ dspace_install_dir }}/etc/deploy-key"
+    accept_hostkey: true
+    dest: "{{dspace_install_dir }}/dspace/handle-server"
+    update: True
+    
+- debug: var=ansible_default_ipv4.address

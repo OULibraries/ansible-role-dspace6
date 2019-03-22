@@ -26,3 +26,9 @@
 - import_tasks: dspace_build.yml
   tags: dspace_build
   become: true
+
+# Run DSpace build script to install
+- import_tasks: dspace_handle.yml
+  when: dspace_handle_repo is defined
+  tags: dspace_handle
+  become: true
