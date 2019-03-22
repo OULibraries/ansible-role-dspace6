@@ -1,0 +1,26 @@
+# Ansible managed file
+
+# Deliver cron email to system administrator
+MAILTO="{{dspace_cron_mailto}}"
+
+# DSpace Installation
+DSPACE="{{dspace_install_dir}}"
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+JAVA_OPTS="{{dspace_cron_java_opts}}"
+
+# Steal Check Wrapper - block execution if steal time above 10%
+check_steal="/opt/oulib/centos7/bin/cpu_check_steal.sh 10"
+
+# Run the DSpace media filter scripts and save all output to a log file
+# (Creates image thumbnails, indexes full text, and
+# performs any automated format conversions)
+0 * * * *  $check_steal $DSPACE/bin/dspace filter-media -m 5
+
+# SiteMaps ensure that your content is more findable in Google, Google Scholar, and other major search engines.
+0 4 * * 0 $check_steal $DSPACE/bin/dspace generate-sitemaps > /dev/null
+
+# Optimize discovery index
+30 5 * * 0 $check_steal $DSPACE/bin/dspace index-discovery -o
+
+# Run OAI incremental import with optimization
+0 6 * * 0  $check_steal $DSPACE/bin/dspace oai import -o

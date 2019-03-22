@@ -1,0 +1,38 @@
+---
+
+
+- name: Place the ssh deploy key
+  copy:
+    owner: tomcat
+    group: tomcat
+    mode: 0700
+    content: "{{dspace_src_deploykey }}"
+    dest: "{{ dspace_install_dir}}/etc/deploy-key"
+
+- name: Verify Tomcat .ssh folder
+  file:
+    path: "/usr/share/tomcat/.ssh"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0700
+
+- name: Configure DSpace deploy key for interactive use
+  template:
+    src: ssh-config.j2
+    dest: "/usr/share/tomcat/.ssh/config"
+
+- name: Clone DSpace code
+  git:
+    repo: "{{ dspace_src_repo }}"
+    version: "{{ dspace_src_version }}"
+    key_file: "{{ dspace_install_dir }}/etc/deploy-key"
+    accept_hostkey: true
+    dest: "{{dspace_install_dir }}/dspace-src"
+    update: True
+
+- name: Install local environment overrides
+  template:
+    src: local.cfg.j2
+    dest: "{{ dspace_install_dir }}/dspace-src/dspace/config/local.cfg"
+

@@ -1,0 +1,68 @@
+---
+
+- name: Make DSpace install destination folders
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0755
+  loop:
+    - "{{ dspace_install_dir }}" 
+    - "{{ dspace_install_dir }}/dspace"        
+    - "{{ dspace_install_dir }}/dspace-src"
+    - "{{ dspace_install_dir }}/etc"     
+    - "{{ dspace_install_dir }}/bin"     
+
+- name: Set SELinux context for dspace files
+  command: >
+          semanage fcontext -a -t tomcat_var_lib_t  "{{ dspace_install_dir }}(/.*)?"
+
+# These can end up with a value that won't work for the tomcat service because
+# we build DSpace as tomcat.  
+- name: Set SELinux tomcat hsperfdata
+  command: >
+          semanage fcontext -a -t tomcat_tmp_t  "/tmp/hsperfdata_tomcat(/.*)?"
+
+- name: Set SELinux booleans
+  seboolean:
+    name: tomcat_can_network_connect_db
+    state: yes
+
+- name: Install JMX user file
+  template:
+    src: jmxremote.access.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
+        
+- name: Install JMX password file
+  template:
+    src: jmxremote.access.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
+
+# Do we also need a JMX Keystore?
+
+- name: Install build config
+  template:
+    src: conf.sh.j2
+    dest: "{{ dspace_install_dir }}/etc/conf.sh"
+
+- name: Install build scripts
+  template:
+    mode: 0755
+    src: "{{item.src}}" 
+    dest: "{{ dspace_install_dir }}/bin/{{item.dest}}"
+  loop:
+    - src: build.sh.j2
+      dest: build.sh
+    - src: clean.sh.j2
+      dest: clean.sh
+    - src: fix_perms.sh.j2
+      dest: fix_perms.sh
+
+- name: Install tomcat crontab for dspace 
+  template:
+    dest: /var/spool/cron/tomcat
+    src: tomcat-cron.j2
+    mode: 0600
+    owner: tomcat
+    group: tomcat

@@ -1,0 +1,49 @@
+---
+# Install Tomcat and configure for DSpace
+
+- name: Install Tomcat RPMs
+  yum:
+    name:
+      - tomcat
+      - tomcat-webapps
+      - tomcat-admin-webapps
+
+- name: Update tomcat server config
+  template:
+    src:  "tomcat-server.xml.j2"
+    dest: "/etc/tomcat/server.xml"
+
+- name: Update tomcat logging config
+  template:
+    src:  "tomcat-logging.properties.j2"
+    dest: "/etc/tomcat/logging.properties"
+
+- name: Configure Tomcat for DSpace web apps.
+  template:
+    src: "{{ item.src }}"
+    dest: "/etc/tomcat/Catalina/localhost/{{ item.dest }}"
+  loop:
+    - src: ROOT.xml.j2
+      dest: ROOT.xml
+    - src: xmlui.xml.j2
+      dest: xmlui.xml
+    - src: solr.xml.j2
+      dest: solr.xml
+    - src: oai.xml.j2
+      dest: oai.xml
+    - src: rdf.xml.j2
+      dest: rdf.xml
+    - src: sword.xml.j2
+      dest: sword.xml
+    - src: rest.xml.j2
+      dest: rest.xml
+
+- name: Configure tomcat user .bowerrc for building Mirage2
+  copy:
+    owner: tomcat
+    group: tomcat
+    dest: "/usr/share/tomcat/.bowerrc"
+    content: |
+      {
+        "registry": "https://registry.bower.io"
+      }

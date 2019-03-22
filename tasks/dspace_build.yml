@@ -1,0 +1,6 @@
+---
+
+- name: Build and install DSpace
+  shell: "{{dspace_install_dir}}/bin/build.sh"
+- name: Fix  DSpace permissions 
+  shell: "{{dspace_install_dir}}/bin/fix_perms.sh"

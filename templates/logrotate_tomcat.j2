@@ -1,0 +1,11 @@
+/var/log/tomcat/catalina.out 
+/var/log/tomcat7/localhost_access_log.txt 
+/var/log/tomcat/*.log{
+    copytruncate
+    daily
+    rotate 90
+    compress
+    missingok
+    create 0644 tomcat tomcat
+}
+

@@ -1,5 +1,28 @@
 ---
-- include: install.yml
-  sudo: yes
-#- include: configure.yml
-#  sudo: yes
+
+# Install and configure Tomcat to run Dspace
+- import_tasks: tomcat.yml
+  tags: dspace_tomcat
+  become: true
+
+
+# Install DSpace-related role assets
+- import_tasks: assets.yml
+  tags: dspace_assets
+  become: true
+
+# Create Dspace database
+- import_tasks: dspace_database.yml
+  tags: dspace_database
+  become: true
+
+# Update dspace code and config
+- import_tasks: dspace_src.yml
+  tags: dspace_deploy
+  become: true
+  become_user: tomcat
+
+# Run DSpace build script to install
+- import_tasks: dspace_build.yml
+  tags: dspace_build
+  become: true
