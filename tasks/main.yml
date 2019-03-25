@@ -27,6 +27,6 @@
 
 # Optionally install DSpace Handle service
 - import_tasks: dspace_handle.yml
-  when: dspace_handle_repo | length > 0
+  when: dspace_handle_repo | default(false)
   tags: dspace_handle
   become: true
