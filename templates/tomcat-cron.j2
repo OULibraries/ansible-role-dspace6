@@ -4,7 +4,7 @@
 MAILTO="{{dspace_cron_mailto}}"
 
 # DSpace Installation
-DSPACE="{{dspace_install_dir}}"
+DSPACE="{{dspace_install_dir}}/dspace"
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 JAVA_OPTS="{{dspace_cron_java_opts}}"
 
@@ -20,7 +20,7 @@ check_steal="/opt/oulib/centos7/bin/cpu_check_steal.sh 10"
 0 4 * * 0 $check_steal $DSPACE/bin/dspace generate-sitemaps > /dev/null
 
 # Optimize discovery index
-30 5 * * 0 $check_steal $DSPACE/bin/dspace index-discovery -o
+30 5 * * 0 $check_steal $DSPACE/bin/dspace index-discovery > /dev/null
 
 # Run OAI incremental import with optimization
-0 6 * * 0  $check_steal $DSPACE/bin/dspace oai import -o
+0 6 * * 0  $check_steal $DSPACE/bin/dspace oai import > /dev/null

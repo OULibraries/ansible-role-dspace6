@@ -1,36 +1,43 @@
 ---
-# defaults file for oulibraries.ce6
-dspace_tomcat_java_opts: ''
-dspace_cli_java_opts: '' 
+# defaults file for OULibraries.dspace6
 
+# Location for  DSpace src, build, and other files
+dspace_install_dir: /srv/dspace
+
+# Java Opts
+dspace_tomcat_java_opts: ''
+dspace_cli_java_opts: ''
+
+# Cron-specific options
 dspace_cron_mailto: ""
 dspace_cron_java_opts: "-Xmx512M -Xms512M -Dfile.encoding=UTF-8"
 
-dspace_install_dir: /srv/dspace
-
+# Dspace code to deploy
 dspace_src_repo: ""
 dspace_src_version: ""
 dspace_src_deploykey: ""
 
-
-dspace_config_extra: ""
+## Optional Handle service config to deploy. Must be readable using
+## dspace_src_deploykey credentials.
+dspace_handle_version:
+dspace_handle_repo:
 
 dspace_db_name: dspace
 dspace_db_user: dspace
 dspace_db_pass: dspace
 
-
+# This block becomes the body of local.cfg
 dspace_local_cfg: |
-  # Cor overrides
+  # Core overrides
   dspace.dir = {{dspace_install_dir}}/dspace
   dspace.hostname =  localhost
   dspace.baseUrl = http://localhost:8080
   dspace.name = DSpace Dev
   assetstore.dir = ${dspace.dir}/assetstore
-  
+
   # DB config
   db.url= jdbc:postgresql://localhost:5432/dspace
   db.username= {{dspace_db_user }}
   db.password= {{dspace_db_pass }}
-   
+
   # Auth config

@@ -5,7 +5,6 @@
   tags: dspace_tomcat
   become: true
 
-
 # Install DSpace-related role assets
 - import_tasks: assets.yml
   tags: dspace_assets
@@ -20,9 +19,14 @@
 - import_tasks: dspace_src.yml
   tags: dspace_deploy
   become: true
-  become_user: tomcat
 
 # Run DSpace build script to install
 - import_tasks: dspace_build.yml
   tags: dspace_build
+  become: true
+
+# Optionally install DSpace Handle service
+- import_tasks: dspace_handle.yml
+  when: dspace_handle_repo | length > 0
+  tags: dspace_handle
   become: true

@@ -1,11 +1,10 @@
 ---
 
-
 - name: Place the ssh deploy key
   copy:
     owner: tomcat
     group: tomcat
-    mode: 0700
+    mode: 0600
     content: "{{dspace_src_deploykey }}"
     dest: "{{ dspace_install_dir}}/etc/deploy-key"
 
@@ -21,6 +20,9 @@
   template:
     src: ssh-config.j2
     dest: "/usr/share/tomcat/.ssh/config"
+    owner: tomcat
+    group: tomcat
+    mode: 0600
 
 - name: Clone DSpace code
   git:
@@ -30,9 +32,13 @@
     accept_hostkey: true
     dest: "{{dspace_install_dir }}/dspace-src"
     update: True
+  become: true
+  become_user: tomcat
 
 - name: Install local environment overrides
   template:
     src: local.cfg.j2
     dest: "{{ dspace_install_dir }}/dspace-src/dspace/config/local.cfg"
-
+    owner: tomcat
+    group: tomcat
+    mode: 0644
