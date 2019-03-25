@@ -1,5 +1,5 @@
 ---
-- name: Clone DSpace handle config 
+- name: Clone DSpace handle config
   git:
     repo: "{{ dspace_handle_repo }}"
     version: "{{ dspace_handle_version }}"
@@ -7,5 +7,20 @@
     accept_hostkey: true
     dest: "{{dspace_install_dir }}/dspace/handle-server"
     update: True
-    
-- debug: var=ansible_default_ipv4.address
+  become: true
+  become_user: tomcat
+
+- name: Install handle server unit definition for Systemd
+  template:
+    src: handle.service.j2
+    dest: /etc/systemd/system/handle.service
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable and start handle service.
+  systemd:
+    daemon_reload: yes
+    name: handle
+    state: started
+    enabled: yes

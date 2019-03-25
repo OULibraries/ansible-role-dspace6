@@ -20,7 +20,6 @@
 - import_tasks: dspace_src.yml
   tags: dspace_deploy
   become: true
-  become_user: tomcat
 
 # Run DSpace build script to install
 - import_tasks: dspace_build.yml

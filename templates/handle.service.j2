@@ -1,0 +1,17 @@
+# Systemd Unit file for Handle Service used by DSpace
+#
+# Based on https://gist.github.com/cwilper/cd1fe3525edba1cc7a32340327a359ed
+
+[Unit]
+Description=Handle Service
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart={{dspace_install_dir}}/dspace/bin/run-handle-server
+ExecStop=/bin/kill $MAINPID
+User=tomcat
+Group=tomcat
+
+[Install]
+WantedBy=multi-user.target
