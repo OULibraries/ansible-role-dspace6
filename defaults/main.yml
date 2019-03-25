@@ -19,8 +19,8 @@ dspace_src_deploykey: ""
 
 ## Optional Handle service config to deploy. Must be readable using
 ## dspace_src_deploykey credentials.
-# dspace_handle_version:
-# dspace_handle_repo"
+dspace_handle_version:
+dspace_handle_repo:
 
 dspace_db_name: dspace
 dspace_db_user: dspace

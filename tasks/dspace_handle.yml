@@ -16,7 +16,7 @@
     dest: /etc/systemd/system/handle.service
     owner: root
     group: root
-    mode: 0644
+    mode: 0664
 
 - name: Enable and start handle service.
   systemd:
