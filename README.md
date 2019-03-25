@@ -8,31 +8,33 @@ Requirements
 
 This role requires the following OU Libraries Ansible Roles:
 
-	* Centos7
-	* Postgresql-server
-	* Users
+* OULibraries.centos7
+* OULibraries.java
+
 
 Role Variables
 --------------
 
-Place the following in your host vars or my-vars.yml file:
-
-dspace_install_dir:
-dspace_dn_prefix:
-dspace_dn_suffix:
-dspace_site_name: 
-dspace_db_username:
-dspace_db_password:
+See `defaults/main.yml` for important variables. 
 
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+You might do something like this in a vagrant environment:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```
+# Build a stand-alone dspace box
+- hosts: dspace.vagrant.localdomain
+  become: true
+  roles:
+    - role: OULibraries.postgresql-server
+      tags: postgresql-server
+    - role: OULibraries.java
+      tags: java
+    - role: OULibraries.dspace6
+      tags: dspace6
+```
 
 License
 -------
@@ -42,4 +44,5 @@ License
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Role developed and maintained by OU Libraries
+
