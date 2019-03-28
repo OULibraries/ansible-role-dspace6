@@ -17,6 +17,11 @@
   template:
     src:  "tomcat-logging.properties.j2"
     dest: "/etc/tomcat/logging.properties"
+    
+- name: Update tomcat logrotate config
+  template:
+    src:  "logrotate_tomcat.j2"
+    dest: "/etc/logrotate.d/tomcat"
 
 - name: Configure Tomcat for DSpace web apps.
   template:
