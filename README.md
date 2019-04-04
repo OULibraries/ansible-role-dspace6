@@ -8,6 +8,7 @@ It provides the following scripts for managing your DSpace install:
 * `bin/build.sh` - runs a `maven` build and `ant` install
 * `bin/clean.sh` - runs a `maven` clean    
 * `bin/fix_perms.sh` - applies known-good permissions and selinux context
+* `bin/git_pull.sh` - updates dspace source with correct permissions
 
 This will be installed in the path specified by the `dspace_install_dir` role variable, along with:
 * `dspace` - the DSpace app directory
