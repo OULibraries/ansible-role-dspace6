@@ -58,6 +58,8 @@
       dest: clean.sh
     - src: fix_perms.sh.j2
       dest: fix_perms.sh
+    - src: git_pull.sh.j2
+      dest: git_pull.sh
 
 - name: Install tomcat crontab for dspace 
   template:

@@ -5,11 +5,6 @@
 # Load per-host configuration
 . {{dspace_install_dir}}/etc/conf.sh
 
-# Build DSpace as an unprivileged user
-if [[ $EUID -eq 0 ]]; then
-    echo "Please don't run as root."
-    exit
-fi
 
 #
 # Clean  DSpace

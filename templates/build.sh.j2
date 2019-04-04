@@ -49,7 +49,7 @@ else
 fi
 
 # make sure SELinux context is right
-restorecon -rv {{dspace_install_dir}}
+sudo restorecon -rv {{dspace_install_dir}}
 
 if [ $SKIP_RESTART -eq 1 ];then
   echo "Skipping restart of tomcat"
