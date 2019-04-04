@@ -13,5 +13,5 @@ sudo chown -R tomcat:tomcat  {{dspace_install_dir}}
 # Verify SELinux context for dspace install
 restorecon -rv  {{dspace_install_dir}}
 
-# Verify SELinix context for tomcat performance data
+# Verify SELinux context for tomcat performance data
 restorecon -rv /tmp/hsperfdata_tomcat
