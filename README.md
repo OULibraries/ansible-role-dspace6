@@ -3,6 +3,18 @@ Dspace6
 
 This role will install Dspace6 on a Centos7 box.
 
+It provides the following scripts for managing your DSpace install:
+
+* `bin/build.sh` - runs a `maven` build and `ant` install
+* `bin/clean.sh` - runs a `maven` clean    
+* `bin/fix_perms.sh` - applies known-good permissions and selinux context
+
+This will be installed in the path specified by the `dspace_install_dir` role variable, along with:
+* `dspace` - the DSpace app directory
+* `dspace-src` - the DSpace source code
+* `etc` - assorted config files
+
+
 Requirements
 ------------
 
