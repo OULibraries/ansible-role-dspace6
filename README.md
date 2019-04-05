@@ -10,10 +10,12 @@ It provides the following scripts for managing your DSpace install:
 * `bin/fix_perms.sh` - applies known-good permissions and selinux context
 * `bin/git_pull.sh` - updates dspace source with correct permissions
 
-This will be installed in the path specified by the `dspace_install_dir` role variable, along with:
+These scripts will be installed in the path specified by the `dspace_install_dir` role variable, along with:
 * `dspace` - the DSpace app directory
 * `dspace-src` - the DSpace source code
 * `etc` - assorted config files
+
+Additionally, if the handle variables are configured, the DSpace handle server will be installed as a `systemd` service.
 
 
 Requirements
