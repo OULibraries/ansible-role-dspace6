@@ -30,8 +30,6 @@
   loop:
     - src: ROOT.xml.j2
       dest: ROOT.xml
-    - src: xmlui.xml.j2
-      dest: xmlui.xml
     - src: solr.xml.j2
       dest: solr.xml
     - src: oai.xml.j2
