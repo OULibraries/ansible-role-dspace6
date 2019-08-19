@@ -1,6 +1,10 @@
-/var/log/tomcat/catalina.out 
-/var/log/tomcat7/localhost_access_log.txt 
-/var/log/tomcat/*.log{
+/var/log/tomcat/localhost_access_log.txt
+/var/log/tomcat/catalina.out
+/var/log/tomcat/catalina.log
+/var/log/tomcat/localhost.log
+/var/log/tomcat/manager.log
+/var/log/tomcat/host-manager.log
+{
     copytruncate
     daily
     rotate 90
@@ -8,4 +12,3 @@
     missingok
     create 0644 tomcat tomcat
 }
-
