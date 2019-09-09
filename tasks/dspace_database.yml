@@ -1,7 +1,7 @@
 ---
 - name: Install psycopg2 python module
   pip:
-    name: psycopg2
+    name: psycopg2-binary
 
 - name: Create postgresql DB user
   become: True
