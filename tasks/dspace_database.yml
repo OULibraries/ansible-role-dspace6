@@ -10,6 +10,7 @@
     name: "{{ dspace_db_user }}"
     password: "{{ dspace_db_pass }}"
     role_attr_flags: NOSUPERUSER
+    encrypted: yes
 
 - name: Create postgresql database
   become: True
