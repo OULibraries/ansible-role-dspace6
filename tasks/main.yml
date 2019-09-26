@@ -10,11 +10,6 @@
   tags: dspace_assets
   become: true
 
-# Create Dspace database
-- import_tasks: dspace_database.yml
-  tags: dspace_database
-  become: true
-
 # Update dspace code and config
 - import_tasks: dspace_src.yml
   tags: dspace_deploy
