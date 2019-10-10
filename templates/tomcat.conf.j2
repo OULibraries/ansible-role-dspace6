@@ -14,7 +14,7 @@ CATALINA_TMPDIR="{{ cataline_tmpdir | default('/var/cache/tomcat/temp') }}"
 # You can pass some parameters to java here if you wish to
 #JAVA_OPTS="-Xminf0.1 -Xmaxf0.3"
 #JAVA_OPTS="-Xmx512m -XX:MaxPermSize=256m"
-CATALINA_OPTS="{{ catlina_opts | default('-Xmx512m -Xms512m') }}"
+CATALINA_OPTS="{{ catalina_opts | default('-Xmx512m -Xms512m') }}"
 
 # Use JAVA_OPTS to set java.library.path for libtcnative.so
 #JAVA_OPTS="-Djava.library.path=/usr/lib"
