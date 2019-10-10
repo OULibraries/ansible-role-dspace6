@@ -23,7 +23,7 @@ CATALINA_OPTS="{{ catalina_opts | default('-Xmx512m -Xms512m') }}"
 #LANG="en_US"
 
 # Run tomcat under the Java Security Manager
-SECURITY_MANAGER="{{ security_manager | default('false')"
+SECURITY_MANAGER="{{ security_manager | default('false') }}"
 
 # Time to wait in seconds, before killing process
 # TODO(stingray): does nothing, fix.
