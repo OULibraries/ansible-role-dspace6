@@ -1,0 +1,34 @@
+# In new-style instances, if CATALINA_BASE isn't specified, it will
+# be constructed by joining TOMCATS_BASE and NAME.
+TOMCATS_BASE="{{ tomcats_base | default('/var/lib/tomcats/') }}"
+
+# Where your java installation lives
+JAVA_HOME="{{ java_home | default('/usr/lib/jvm/jre') }}"
+
+# Where your tomcat installation lives
+CATALINA_HOME="{{ catalina_home | default('/usr/share/tomcat') }}"
+
+# System-wide tmp
+CATALINA_TMPDIR="{{ cataline_tmpdir | default('/var/cache/tomcat/temp') }}"
+
+# You can pass some parameters to java here if you wish to
+#JAVA_OPTS="-Xminf0.1 -Xmaxf0.3"
+#JAVA_OPTS="-Xmx512m -XX:MaxPermSize=256m"
+CATALINA_OPTS="{{ catlina_opts | default('-Xmx512m -Xms512m') }}"
+
+# Use JAVA_OPTS to set java.library.path for libtcnative.so
+#JAVA_OPTS="-Djava.library.path=/usr/lib"
+
+# You can change your tomcat locale here
+#LANG="en_US"
+
+# Run tomcat under the Java Security Manager
+SECURITY_MANAGER="{{ security_manager | default('false')"
+
+# Time to wait in seconds, before killing process
+# TODO(stingray): does nothing, fix.
+# SHUTDOWN_WAIT="30"
+
+# If you wish to further customize your tomcat environment,
+# put your own definitions here
+# (i.e. LD_LIBRARY_PATH for some jdbc drivers)

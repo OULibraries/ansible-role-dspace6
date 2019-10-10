@@ -50,3 +50,8 @@
       {
         "registry": "https://registry.bower.io"
       }
+
+- name: Update tomcat config
+  template:
+    src: "tomcat.conf.j2"
+    dest: "/etc/tomcat/tomcat.conf"
