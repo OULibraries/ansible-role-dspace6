@@ -17,21 +17,21 @@ TOMCAT_CFG_LOADED="1"
 
 # In new-style instances, if CATALINA_BASE isn't specified, it will
 # be constructed by joining TOMCATS_BASE and NAME.
-TOMCATS_BASE="{{ tomcats_base | default('/var/lib/tomcats/') }}"
+TOMCATS_BASE="{{ tomcats_base }}"
 
 # Where your java installation lives
-JAVA_HOME="{{ java_home | default('/usr/lib/jvm/jre') }}"
+JAVA_HOME="{{ tomcat_java_home }}"
 
 # Where your tomcat installation lives
-CATALINA_HOME="{{ catalina_home | default('/usr/share/tomcat') }}"
+CATALINA_HOME="{{ tomcat_catalina_home }}"
 
 # System-wide tmp
-CATALINA_TMPDIR="{{ catalina_tmpdir | default('/var/cache/tomcat/temp') }}"
+CATALINA_TMPDIR="{{ tomcat_catalina_tmpdir }}"
 
 # You can pass some parameters to java here if you wish to
 #JAVA_OPTS="-Xminf0.1 -Xmaxf0.3"
 #JAVA_OPTS="-Xmx512m -XX:MaxPermSize=256m"
-CATALINA_OPTS="{{ catalina_opts | default('-Xmx512m -Xms512m') }}"
+CATALINA_OPTS="{{ tomcat_catalina_opts }}"
 
 # Use JAVA_OPTS to set java.library.path for libtcnative.so
 #JAVA_OPTS="-Djava.library.path=/usr/lib"
@@ -40,7 +40,7 @@ CATALINA_OPTS="{{ catalina_opts | default('-Xmx512m -Xms512m') }}"
 #LANG="en_US"
 
 # Run tomcat under the Java Security Manager
-SECURITY_MANAGER="{{ security_manager | default('false') }}"
+SECURITY_MANAGER="{{ tomcat_security_manager }}"
 
 # Time to wait in seconds, before killing process
 # TODO(stingray): does nothing, fix.
