@@ -55,3 +55,36 @@
   template:
     src: "tomcat.conf.j2"
     dest: "/etc/tomcat/tomcat.conf"
+
+
+# These can end up with a value that won't work for the tomcat service because
+# we build DSpace as tomcat.  
+- name: Set SELinux tomcat hsperfdata
+  command: >
+          semanage fcontext -a -t tomcat_tmp_t  "/tmp/hsperfdata_tomcat(/.*)?"
+
+- name: Set SELinux booleans
+  seboolean:
+    name: tomcat_can_network_connect_db
+    state: yes
+
+- name: Install JMX user file
+  template:
+    src: jmxremote.access.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
+  when: jmx_user is defined
+        
+- name: Install JMX password file
+  template:
+    src: jmxremote.password.j2  
+    dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
+  when: jmx_user is defined
+# Do we also need a JMX Keystore?
+
+- name: Install tomcat crontab for dspace 
+  template:
+    dest: /var/spool/cron/tomcat
+    src: tomcat-cron.j2
+    mode: 0600
+    owner: tomcat
+    group: tomcat
