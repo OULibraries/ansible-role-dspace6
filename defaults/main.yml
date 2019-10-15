@@ -3,7 +3,7 @@
 
 # Global Tomcat vars
 dspace_tomcats_base: /var/lib/tomcats/
-dspace_java_home: /usr/lib/jvm/jre
+dspace_tomcat_java_home: /usr/lib/jvm/jre
 dspace_catalina_home: /usr/share/tomcat
 dspace_catalina_tmpdir: /var/cache/tomcat/temp
 dspace_catalina_opts: "-Xmx512m -Xms512m"
