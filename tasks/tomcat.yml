@@ -72,14 +72,13 @@
   template:
     src: jmxremote.access.j2  
     dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
-  when: jmx_user is defined
+  when: dspace_jmx_user is defined
         
 - name: Install JMX password file
   template:
     src: jmxremote.password.j2  
     dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
-  when: jmx_user is defined
-# Do we also need a JMX Keystore?
+  when: dspace_jmx_user is defined
 
 - name: Install tomcat crontab for dspace 
   template:
