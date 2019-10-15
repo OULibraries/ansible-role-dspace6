@@ -2,7 +2,7 @@
 # defaults file for OULibraries.dspace6
 
 # Location for  DSpace src, build, and other files
-dspace_install_dir: /mnt/shareokdata/6x-assetstore0
+dspace_install_dir: /srv/shareok 
 
 # Java Opts
 dspace_tomcat_java_opts: ''
@@ -33,7 +33,7 @@ dspace_local_cfg: |
   dspace.hostname =  localhost
   dspace.baseUrl = http://localhost:8080
   dspace.name = DSpace Dev
-  assetstore.dir = ${dspace.dir}/assetstore
+  assetstore.dir = /mnt/shareokdata/6x-assetstore0
 
   # DB config
   db.url= jdbc:postgresql://localhost:5432/dspace
