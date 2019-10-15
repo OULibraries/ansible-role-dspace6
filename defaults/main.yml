@@ -2,7 +2,7 @@
 # defaults file for OULibraries.dspace6
 
 # Location for  DSpace src, build, and other files
-dspace_install_dir: /srv/dspace
+dspace_install_dir: /mnt/shareokdata/6x-assetstore0
 
 # Java Opts
 dspace_tomcat_java_opts: ''
