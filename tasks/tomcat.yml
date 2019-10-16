@@ -78,6 +78,7 @@
   template:
     src: jmxremote.password.j2  
     dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
+    mode: 0600
   when: dspace_jmx_user is defined
 
 - name: Install tomcat crontab for dspace 
