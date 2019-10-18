@@ -1,6 +1,14 @@
 ---
 # defaults file for OULibraries.dspace6
 
+# Global Tomcat vars
+dspace_tomcats_base: /var/lib/tomcat/
+dspace_tomcat_java_home: /usr/lib/jvm/jre
+dspace_tomcat_catalina_home: /usr/share/tomcat
+dspace_tomcat_catalina_tmpdir: /var/cache/tomcat/temp
+dspace_tomcat_catalina_opts: "-Xmx512m -Xms512m"
+dspace_tomcat_security_manager: "false"
+
 # Location for  DSpace src, build, and other files
 dspace_install_dir: /srv/dspace
 

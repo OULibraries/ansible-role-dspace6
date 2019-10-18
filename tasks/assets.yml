@@ -18,29 +18,6 @@
   command: >
           semanage fcontext -a -t tomcat_var_lib_t  "{{ dspace_install_dir }}(/.*)?"
 
-# These can end up with a value that won't work for the tomcat service because
-# we build DSpace as tomcat.  
-- name: Set SELinux tomcat hsperfdata
-  command: >
-          semanage fcontext -a -t tomcat_tmp_t  "/tmp/hsperfdata_tomcat(/.*)?"
-
-- name: Set SELinux booleans
-  seboolean:
-    name: tomcat_can_network_connect_db
-    state: yes
-
-- name: Install JMX user file
-  template:
-    src: jmxremote.access.j2  
-    dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
-        
-- name: Install JMX password file
-  template:
-    src: jmxremote.access.j2  
-    dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
-
-# Do we also need a JMX Keystore?
-
 - name: Install build config
   template:
     src: conf.sh.j2
@@ -60,11 +37,3 @@
       dest: fix_perms.sh
     - src: git_pull.sh.j2
       dest: git_pull.sh
-
-- name: Install tomcat crontab for dspace 
-  template:
-    dest: /var/spool/cron/tomcat
-    src: tomcat-cron.j2
-    mode: 0600
-    owner: tomcat
-    group: tomcat
