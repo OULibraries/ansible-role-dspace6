@@ -2,7 +2,7 @@
 # defaults file for OULibraries.dspace6
 
 # Global Tomcat vars
-dspace_tomcats_base: /var/lib/tomcats/
+dspace_tomcats_base: /var/lib/tomcat/
 dspace_tomcat_java_home: /usr/lib/jvm/jre
 dspace_tomcat_catalina_home: /usr/share/tomcat
 dspace_tomcat_catalina_tmpdir: /var/cache/tomcat/temp
