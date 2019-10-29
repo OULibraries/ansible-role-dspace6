@@ -1,5 +1,12 @@
 ---
 
+- name: Install RPMs required by DSpace
+  yum:
+    name:
+      - ghostscript 
+      - ghostscript-fonts
+
+
 - name: Make DSpace install destination folders
   file: 
     path: "{{ item }}"
