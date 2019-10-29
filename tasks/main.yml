@@ -5,7 +5,7 @@
   tags: dspace_tomcat
   become: true
 
-# Install DSpace-related role assets
+# Install DSpace requirements and role assets
 - import_tasks: assets.yml
   tags: dspace_assets
   become: true
