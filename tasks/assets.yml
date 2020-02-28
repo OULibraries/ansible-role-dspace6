@@ -38,6 +38,8 @@
   loop:
     - src: build.sh.j2
       dest: build.sh
+    - src: install.sh.j2
+      dest: install.sh
     - src: clean.sh.j2
       dest: clean.sh
     - src: fix_perms.sh.j2
