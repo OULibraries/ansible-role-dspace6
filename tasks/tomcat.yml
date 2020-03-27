@@ -17,7 +17,7 @@
   template:
     src:  "tomcat-logging.properties.j2"
     dest: "/etc/tomcat/logging.properties"
-    
+
 - name: Update tomcat logrotate config
   template:
     src:  "logrotate_tomcat.j2"
@@ -58,7 +58,7 @@
 
 
 # These can end up with a value that won't work for the tomcat service because
-# we build DSpace as tomcat.  
+# we build DSpace as tomcat.
 - name: Set SELinux tomcat hsperfdata
   command: >
           semanage fcontext -a -t tomcat_tmp_t  "/tmp/hsperfdata_tomcat(/.*)?"
@@ -70,18 +70,18 @@
 
 - name: Install JMX user file
   template:
-    src: jmxremote.access.j2  
+    src: jmxremote.access.j2
     dest: "{{ dspace_install_dir }}/etc/jmxremote.access"
   when: dspace_jmx_user is defined
-        
+
 - name: Install JMX password file
   template:
-    src: jmxremote.password.j2  
+    src: jmxremote.password.j2
     dest: "{{ dspace_install_dir }}/etc/jmxremote.password"
     mode: 0600
   when: dspace_jmx_user is defined
 
-- name: Install tomcat crontab for dspace 
+- name: Install tomcat crontab for dspace
   template:
     dest: /var/spool/cron/tomcat
     src: tomcat-cron.j2

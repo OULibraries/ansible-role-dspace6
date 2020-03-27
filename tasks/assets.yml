@@ -3,23 +3,23 @@
 - name: Install RPMs required by DSpace
   yum:
     name:
-      - ghostscript 
+      - ghostscript
       - ghostscript-fonts
 
 
 - name: Make DSpace install destination folders
-  file: 
+  file:
     path: "{{ item }}"
     state: directory
     owner: tomcat
     group: tomcat
     mode: 0755
   loop:
-    - "{{ dspace_install_dir }}" 
-    - "{{ dspace_install_dir }}/dspace"        
+    - "{{ dspace_install_dir }}"
+    - "{{ dspace_install_dir }}/dspace"
     - "{{ dspace_install_dir }}/dspace-src"
-    - "{{ dspace_install_dir }}/etc"     
-    - "{{ dspace_install_dir }}/bin"     
+    - "{{ dspace_install_dir }}/etc"
+    - "{{ dspace_install_dir }}/bin"
 
 - name: Set SELinux context for dspace files
   command: >
@@ -33,8 +33,8 @@
 - name: Install build scripts
   template:
     mode: 0755
-    src: "{{item.src}}" 
-    dest: "{{ dspace_install_dir }}/bin/{{item.dest}}"
+    src: "{{ item.src }}"
+    dest: "{{ dspace_install_dir }}/bin/{{ item.dest }}"
   loop:
     - src: build.sh.j2
       dest: build.sh

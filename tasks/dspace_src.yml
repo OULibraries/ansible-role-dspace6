@@ -5,8 +5,8 @@
     owner: tomcat
     group: tomcat
     mode: 0600
-    content: "{{dspace_src_deploykey }}"
-    dest: "{{ dspace_install_dir}}/etc/deploy-key"
+    content: "{{ dspace_src_deploykey }}"
+    dest: "{{ dspace_install_dir }}/etc/deploy-key"
 
 - name: Verify Tomcat .ssh folder
   file:
@@ -30,7 +30,7 @@
     version: "{{ dspace_src_version }}"
     key_file: "{{ dspace_install_dir }}/etc/deploy-key"
     accept_hostkey: true
-    dest: "{{dspace_install_dir }}/dspace-src"
+    dest: "{{ dspace_install_dir }}/dspace-src"
     update: True
   become: true
   become_user: tomcat
