@@ -21,9 +21,11 @@
     - "{{ dspace_install_dir }}/etc"
     - "{{ dspace_install_dir }}/bin"
 
-- name: Set SELinux context for dspace files
-  command: >
-          semanage fcontext -a -t tomcat_var_lib_t  "{{ dspace_install_dir }}(/.*)?"
+- name: Allow tomcat to access the dspace install
+  sefcontext:
+    target: "{{ dspace_install_dir }}(/.*)?"
+    setype: tomcat_var_lib_t
+    state: present
 
 - name: Install build config
   template:
