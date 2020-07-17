@@ -11,7 +11,7 @@ JAVA_OPTS="{{dspace_cron_java_opts}}"
 # Run the DSpace media filter scripts and save all output to a log file
 # (Creates image thumbnails, indexes full text, and
 # performs any automated format conversions)
-0 * * * * $DSPACE/bin/dspace filter-media -m 5
+0 * * * * $DSPACE/bin/dspace filter-media
 
 # SiteMaps ensure that your content is more findable in Google, Google Scholar, and other major search engines.
 0 4 * * 0 $DSPACE/bin/dspace generate-sitemaps > /dev/null
