@@ -1,0 +1,8 @@
+---
+# Install tools for DSpace configuration or maintenance
+
+- name: Install SELinux troubleshooting RPM
+  yum:
+    name:
+      - setroubleshoot-server
+

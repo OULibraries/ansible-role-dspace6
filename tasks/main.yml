@@ -20,6 +20,11 @@
   tags: dspace_build
   become: true
 
+# Install SELinux troubleshooting tools
+- import_tasks: se_tools.yml
+  tags: se_tools
+  become: true
+
 # Optionally install DSpace Handle service
 - import_tasks: dspace_handle.yml
   when: dspace_handle_repo | default(false)
