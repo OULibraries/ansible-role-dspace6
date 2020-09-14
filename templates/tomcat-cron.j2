@@ -13,10 +13,13 @@ JAVA_OPTS="{{dspace_cron_java_opts}}"
 # performs any automated format conversions)
 0 * * * * $DSPACE/bin/dspace filter-media
 
+# Importing existing authors & keeping the index up to date
+30 3 * * 0 $DSPACE/bin/dspace index-authority > /dev/null
+
 # SiteMaps ensure that your content is more findable in Google, Google Scholar, and other major search engines.
 0 4 * * 0 $DSPACE/bin/dspace generate-sitemaps > /dev/null
 
-# Optimize discovery index
+# Update Discovery search and browse Index
 30 5 * * 0 $DSPACE/bin/dspace index-discovery > /dev/null
 
 # Run OAI incremental import with optimization
