@@ -8,10 +8,10 @@ DSPACE="{{dspace_install_dir}}/dspace"
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 JAVA_OPTS="{{dspace_cron_java_opts}}"
 
-# Run the DSpace media filter scripts and save all output to a log file
+# Run the DSpace media filter scripts and discard output
 # (Creates image thumbnails, indexes full text, and
 # performs any automated format conversions)
-0 * * * * $DSPACE/bin/dspace filter-media
+0 * * * * $DSPACE/bin/dspace filter-media > /dev/null
 
 # SiteMaps ensure that your content is more findable in Google, Google Scholar, and other major search engines.
 0 4 * * 0 $DSPACE/bin/dspace generate-sitemaps > /dev/null
@@ -21,3 +21,6 @@ JAVA_OPTS="{{dspace_cron_java_opts}}"
 
 # Run OAI incremental import with optimization
 0 6 * * 0 $DSPACE/bin/dspace oai import > /dev/null
+
+# Cleanup 200 deleted bitstreams at 5:00 every Sunday
+0 5 * * 0 $DSPACE/bin/dspace cleanup -c 200  > /dev/null
